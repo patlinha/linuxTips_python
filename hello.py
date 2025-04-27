@@ -24,13 +24,18 @@ msg = "Hello, World!"
 
 #current_language = "en_US"
 import os
+# Com um valor default em caso da variável não existir
 current_language = os.getenv("LANG", "en_US")[:5]
+#current_language = "fr_FR"
+#current_language = "it_IT"
 
 if current_language == "pt_BR":
     msg = "Olá, Mundo!"
 elif current_language == "it_IT":
     msg = "Ciao, Mondo!"
+elif current_language == "fr_FR":
+	msg = "Bonjour, Monde!"
 
 
 print('patricia'.upper())
-print(current_language)
+print(msg)
