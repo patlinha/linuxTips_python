@@ -1,0 +1,90 @@
+#!/usr/bin/env python3
+"""Calculadora prefix
+
+Funcionamento:
+
+[operação] [n1] [n2]
+
+Operações:
+sum -> +
+sub -> -
+mul -> *
+div -> /
+
+Uso:
+$ prefixcalc.py sum 5 2
+7
+
+$ prefixcalc.py mul 10 5
+50
+
+$ prefixcalc.py
+operação: sum
+n1: 5
+n2: 4
+9
+
+Os resultados serão salvos em `prefixcalc.log`
+
+"""
+
+__version__ = "0.1.0"
+
+import sys
+import os
+from datetime import datetime
+
+argumentos = sys.argv[1:]
+
+if not argumentos:
+    operacao = input("operação: ")
+    n1 = input("n1: ")
+    n2 = input("n2: ")
+    argumentos = [operacao, n1, n2]
+elif len(argumentos) != 3:
+    print("Número de algumentos inválidos")
+    print("ex: `sum 5 5`")
+    sys.exit(1)
+
+operacao, *nums = argumentos
+
+operacoes_validas = ("sum", "sub", "mul", "div")
+if operacao not in operacoes_validas:
+    print("Operação inválida")
+    print(operacoes_validas)
+    sys.exit(1)
+
+numeros_validados = []
+for num in nums:
+    # TOD: Repetição while + exceptions
+    if not num.replace(".","").isdigit():
+        print(f"Número inválido {num}")
+        sys.exit(1)
+    if "." in num:
+        num = float(num)
+    else:
+        num = int(num)
+    numeros_validados.append(num)
+
+n1, n2 = numeros_validados
+
+# TODO: usar dicionario de funções
+if operacao == "sum":
+    resultado = n1 + n2
+if operacao == "sub":
+    resultado = n1 - n2
+if operacao == "mul":
+    resultado = n1 * n2
+if operacao == "div":
+    resultado = n1 / n2
+
+path = os.curdir
+filepath = os.path.join(path, "prefixcalc.log")
+timestamp = datetime.now().isoformat()
+user = os.getenv('USER', 'anonymous')
+
+#print(f"{operacao}, {n1}, {n2} = {resultado}", file=open("prefixcalc.log", "a"))
+with open(filepath, "a") as file_:
+    file_.write(f"{timestamp} - {user} --> {operacao}, {n1}, {n2} = {resultado}\n")
+
+print(f"O resultado é {resultado}")
