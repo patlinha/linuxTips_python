@@ -5,20 +5,23 @@ import sys
 
 #EAFP - Easy to Ask Forgiveness than permission
 
+try:
+    raise RuntimeError("Ocorreu um erro") #força a executar o erro sempre
+except Exception as e:
+    print(str(e))
+
+
 
 try:
-    1 / 0 #ZeroDivisionError
     names = open("names.txt").readlines() #FileNotFoundError
-    print(names.append) #AttributeError
-except (FileNotFoundError, ZeroDivisionError) as e:
+except FileNotFoundError as e:
     print(f"{str(e)}")
     sys.exit(1)
-except ZeroDivisionError:
-    print("[Error] You can't divide any number by 0")
-    sys.exit(1)
-except AttributeError:
-    print("[Error] This is a list not an object")
-    sys.exit(1)
+    # TODO: Usar retry
+else:
+    print("Sucesso!!")
+finally:
+    print("Execute isso sempre...")
 
 try:
     print(names[3])
