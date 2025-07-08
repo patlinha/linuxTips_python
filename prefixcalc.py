@@ -66,7 +66,11 @@ for num in nums:
         num = int(num)
     numeros_validados.append(num)
 
-n1, n2 = numeros_validados
+try:
+    n1, n2 = numeros_validados
+except ValueError as e:
+    print(str(e))
+    sys.exit(1)
 
 # TODO: usar dicionario de funções
 if operacao == "sum":
@@ -83,8 +87,13 @@ filepath = os.path.join(path, "prefixcalc.log")
 timestamp = datetime.now().isoformat()
 user = os.getenv('USER', 'anonymous')
 
-#print(f"{operacao}, {n1}, {n2} = {resultado}", file=open("prefixcalc.log", "a"))
-with open(filepath, "a") as file_:
-    file_.write(f"{timestamp} - {user} --> {operacao}, {n1}, {n2} = {resultado}\n")
-
 print(f"O resultado é {resultado}")
+
+#print(f"{operacao}, {n1}, {n2} = {resultado}", file=open("prefixcalc.log", "a"))
+try:
+    with open(filepath, "a") as file_:
+        file_.write(f"{timestamp} - {user} --> {operacao}, {n1}, {n2} = {resultado}\n")
+except PermissionError as e:
+    # TODO: logging
+    print(str(e))
+    sys.exit(1)
