@@ -2,26 +2,32 @@
 
 import os
 import logging
-
-log_level = os.getenv("LOG_LEVEL", "WARNING").upper()
+from logging import handlers
 
 #BOILERPLATE
 # TODO: usar função
 # TODO: usar lib (loguru)
 
-# nossa instancia
+log_level = os.getenv("LOG_LEVEL", "WARNING").upper()
 log = logging.Logger("pati", log_level)
-# level
-ch = logging.StreamHandler()
-ch.setLevel(log_level)
-# formatacao
+#ch = logging.StreamHandler()
+#ch.setLevel(log_level)
+fh = handlers.RotatingFileHandler(
+    "meulog.log", 
+    maxBytes=300, # 10**6
+    backupCount=10
+)
+fh.setLevel(log_level)
 fmt = logging.Formatter(
     '%(asctime)s %(name)s %(levelname)s '
     'l:%(lineno)d f:%(filename)s: %(message)s'
 )
-ch.setFormatter(fmt)
-#destino
-log.addHandler(ch)
+#ch.setFormatter(fmt)
+fh.setFormatter(fmt)
+#log.addHandler(ch)
+log.addHandler(fh)
+
+
 """
 log.debug("Msg pro dev, qa, sysadmin")
 log.info("Msg geral para usuários")
@@ -31,10 +37,8 @@ log.critical("Erro geral: banco de dados sumiu")
 
 """
 
-print("---")
-
 try:
     1/0
 except ZeroDivisionError as e:
-    logging.error("[ERRO] Deu erro %s", str(e))
+    log.error("[ERRO] Deu erro %s", str(e))
     # stderr
