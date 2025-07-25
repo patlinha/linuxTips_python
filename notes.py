@@ -29,23 +29,36 @@ if not arguments:
 if arguments[0] not in cmds:
     print(f"Invalid command {arguments[0]}")
 
-if arguments[0] == "read":
-    #leitura das notas
-    for line in open(filepath):
-        title, tag, text = line.split("\t")
-        if tag == arguments[1].lower():
-            print(f"titulo: {title}")
-            print(f"texto: {text}")
-            print("-" * 30)
-            print()
+while True:
 
-if arguments[0] == "new":
-    titulo = arguments[1] #TODO: tratar exception
-    text = [
-        f"{titulo}",
-        input("tag:").strip(),
-        input("text:\n").strip(),
-    ]
+    if arguments[0] == "read":
+        try:
+            arg_tag = arguments[1].lower()
+        except IndexError:
+            arg_tag = input("Qual a tag?\n").strip().lower()
+        #leitura das notas
+        for line in open(filepath):
+            title, tag, text = line.split("\t")
+            if tag.lower() == arg_tag:
+                print(f"titulo: {title}")
+                print(f"texto: {text}")
+                print("-" * 30)
+                print()
 
-    with open(filepath, "a") as file_:
-        file_.write("\t".join(text) + "\n")
+    if arguments[0] == "new":
+        try:
+            titulo = arguments[1]
+        except IndexError:
+            title = input("qual é o título?\n").strip().title()
+        text = [
+            f"{title}",
+            input("tag:").strip(),
+            input("text:\n").strip(),
+        ]
+
+        with open(filepath, "a") as file_:
+            file_.write("\t".join(text) + "\n")
+
+    cont = input(f"Quer continuar {arguments[0]} notas? [N/y] : ").strip().lower()
+    if cont != "y":
+        break

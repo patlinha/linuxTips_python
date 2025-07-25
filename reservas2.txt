@@ -1,0 +1,4 @@
+Pati,1,5
+Gabi,2,3
+Jacke,4,6
+Amanda,3,7

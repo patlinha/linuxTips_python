@@ -1,3 +1,9 @@
 Minha primeira nota	geral	Primeira nota do arquivo
 Minha segunda nota	tecnologia	Python é legal, vaiii
 Minha terceira nota	tecnologia	Java tb é legal
+Terceira nota	tech	Golang
+Repeticoes	python	While e for para repetir
+Meu Post Legal	geral	Olá
+Fome	comida	Batata
+Mais Fome	comida	arroz
+Novo Teste	qa	bla bal bla
