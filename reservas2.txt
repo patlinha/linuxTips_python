@@ -1,4 +1,4 @@
-Pati,1,5
-Gabi,2,3
-Jacke,4,6
 Amanda,3,7
+Pati,1,5
+Hillary,4,15
+Cris,2,15
