@@ -34,6 +34,7 @@ import sys
 import os
 from datetime import datetime
 import logging
+import operator
 
 log_level = os.getenv("LOG_LEVEL", "WARNING").upper()
 log = logging.Logger("pati", log_level)
@@ -46,8 +47,16 @@ fmt = logging.Formatter(
 ch.setFormatter(fmt)
 log.addHandler(ch)
 
+argumentos = sys.argv[1:]
+operacoes_validas = {
+    "sum" : lambda a, b: a + b,
+    "sub" : operator.sub, 
+    "mul" : lambda a, b: a * b,
+    "div" : operator.truediv
+}
+
+
 while True:
-    argumentos = sys.argv[1:]
 
     if not argumentos:
         operacao = input("operação: ")
@@ -61,7 +70,6 @@ while True:
 
     operacao, *nums = argumentos
 
-    operacoes_validas = ("sum", "sub", "mul", "div")
     if operacao not in operacoes_validas:
         print("Operação inválida")
         print(operacoes_validas)
@@ -85,15 +93,7 @@ while True:
         print(str(e))
         sys.exit(1)
 
-    # TODO: usar dicionario de funções
-    if operacao == "sum":
-        resultado = n1 + n2
-    if operacao == "sub":
-        resultado = n1 - n2
-    if operacao == "mul":
-        resultado = n1 * n2
-    if operacao == "div":
-        resultado = n1 / n2
+    resultado = operacoes_validas[operacao](n1, n2)
 
     path = os.curdir
     filepath = os.path.join(path, "prefixcalc.log")
@@ -109,6 +109,8 @@ while True:
     except PermissionError as e:
         log.error(str(e))
         sys.exit(1)
+
+    argumentos = None
 
     if input("Pressione enter para continuar\ne qualquer tecla para sair\n"):
         break

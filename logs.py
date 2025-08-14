@@ -5,7 +5,7 @@ import logging
 from logging import handlers
 
 #BOILERPLATE
-# TODO: usar função
+# TODO: Mover para módulo de utilizades
 # TODO: usar lib (loguru)
 
 log_level = os.getenv("LOG_LEVEL", "WARNING").upper()
